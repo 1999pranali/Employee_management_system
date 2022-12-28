@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 //import { NavLink } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddUser() {
   const [error, setError] = useState("");
@@ -23,6 +25,12 @@ const handleSubmit = async (e) => {
   try {
     const url = "http://localhost:8080/api/employee/store";
     const { data: res } = await axios.post(url, data);
+    toast.info("Employee Added Successfully!", {
+      position: "top-right",
+      autoClose: 5000,          
+      pauseOnHover: true,          
+      theme: "colored",
+      });
     navigate("/employee");
     console.log(res.message);
   } catch (error) {
@@ -103,9 +111,7 @@ const handleSubmit = async (e) => {
                   Save                
                 </button>
             </div>
-        </form>
-
-        
+        </form>      
 
 
     </>

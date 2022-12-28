@@ -9,7 +9,7 @@ const Login = () => {
 	const navigate=useNavigate()
 	const [data, setData] = useState({ email: "", password: "" });
 	const [error, setError] = useState("");
-
+		
 	// const [userData, setUserData] = useState({});
 	
 	const handleChange = ({ currentTarget: input }) => {
@@ -39,7 +39,7 @@ const Login = () => {
 			else{
 				// navigate("/emp",{state:{id:res.data._id}})
 				navigate({
-					pathname:"/emp/dashboard",
+					pathname:"/emp",
 					search:createSearchParams({
 						id:res.data._id
 					}).toString()

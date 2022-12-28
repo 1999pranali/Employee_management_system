@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import ls from "localstorage-slim";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Leave() {
   const navigate = useNavigate();
@@ -20,7 +22,12 @@ export default function Leave() {
       .post("http://localhost:8080/api/leave/store", { userId: userId,leaveType:data.leaveType,reason:data.reason,fromDate:data.fromDate,toDate:data.toDate })
       .then((res) => {
         // alert("checkIn successfully");
-
+         toast.info("Leave Added Successfully!", {
+          position: "top-right",
+          autoClose: 5000,          
+          pauseOnHover: true,          
+          theme: "colored",
+          });
         navigate("/emp/leave-report");
         // console.log("checkin Successfully");
       });
@@ -68,6 +75,7 @@ export default function Leave() {
             <button type="submit" class="flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   Save                
                 </button>
+               
             </div>
         </form>
    

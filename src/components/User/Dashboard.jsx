@@ -4,16 +4,32 @@ import ls from "localstorage-slim";
 import moment from "moment";
 import { Doughnut } from "react-chartjs-2";
 import "chart.js/auto";
+
+// import FullCalendar from '@fullcalendar/react' // must go before plugins
+// import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+
+import FullCalendar, { formatDate } from '@fullcalendar/react' // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+
+import timeGridPlugin from '@fullcalendar/timegrid'
+import interactionPlugin from '@fullcalendar/interaction'
+// import { INITIAL_EVENTS, createEventId } from './event-utils'
 // import { Chart, ArcElement ,Title} from "chart.js";
 // Chart.register(ArcElement);
 // Chart.register(Title);
+
+// import { ToastContainer, toast } from 'react-toastify';
+//   import 'react-toastify/dist/ReactToastify.css';
 export default function Dashboard() {
   // const [charts, setCharts] = useState([]);
   const [leaveRecord, setLeaveRecord] = useState([]);
   const userId = ls.get("empId");
   const [profile, setProfile] = useState({first: ""});
   const [counter, setCounter] = useState(0);
+  const [leave, setLeave] = useState([]);
   const list = [];
+
+  // const notify = () => toast("Wow so easy!");
 
   useEffect(() => {
 
@@ -69,13 +85,19 @@ export default function Dashboard() {
       });
 
 
-
+      axios
+          .get(`http://localhost:8080/api/leave/read/${userId}`)
+          .then((res) => {
+            setLeave(res.data);
+            //  console.log("Attendance Data" +attendance.Date);
+          });
   }, [leaveRecord[0]?._id]);
   
     const data = {
       labels: ["Absent", "Present"],
       datasets: [
         {
+
           // data: [charts.first, 30-charts.first],
           data: [counter?.first, 30 - counter?.first],
           backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
@@ -85,6 +107,11 @@ export default function Dashboard() {
       ],
     };
   return (
+    <>
+     {/* <div className="GeeksforGeeks">
+     <button onClick={notify}>Notify!</button>
+        <ToastContainer />
+            </div> */}
     <div class="flex flex-row m-8">
       <div class="p-3  max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 ">
         <div class="pl-14 pr-14">
@@ -138,5 +165,64 @@ export default function Dashboard() {
         <Doughnut data={data} />
       </div>
     </div>
+    <div class="grid grid-cols-1">
+      <div class="w-90">
+      <FullCalendar
+        plugins={[ dayGridPlugin , timeGridPlugin, interactionPlugin ]}
+        initialView="dayGridMonth"
+        headerToolbar={{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        }}
+        displayEventTime= {false}
+        // editable={true}
+        //   selectable={true}
+        //   selectMirror={true}
+        //   dayMaxEvents={true}
+        events={
+          leave.map((data,id)=>{
+            //  const date = Date.parse(data.toDate); 
+            // alert(date)
+            // new Date(date.setDate(date.getDate() + 1))
+            return(
+              {
+                title : 'leave',
+                start: data.fromDate,
+                 end : Date.parse(data.toDate)
+              }
+              
+            )
+          })
+        }
+        eventColor="red"
+        
+      />
+          {/* <FullCalendar 
+          plugins={[ dayGridPlugin , timeGridPlugin, interactionPlugin]} 
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          }}
+          initialView='dayGridMonth'
+          editable={true}
+          selectable={true}
+          selectMirror={true}
+          dayMaxEvents={true}
+          events={
+          [
+              {
+                title : 'leave',
+                start: data.fromDate,
+                  end : data.toDate
+              }
+            ]
+          } /> */}
+      </div>
+      
+    </div>
+    
+    </>
   );
 }

@@ -25,7 +25,7 @@ router.post("/store", async (req, res) => {
 		  "/" +
 		  today.getFullYear();
 		await new Leave({userId:userIds,leaveType:req.body.leaveType,reason:req.body.reason,fromDate:req.body.fromDate,toDate:req.body.toDate,userDate:date,adminDate:null,status:"pending"}).save();
-		res.status(201).send({ message: "leave added successfully" });
+		 res.status(201).send({ message: "leave added successfully" });
 	} catch (error) {
 		res.status(500).send({ message: message.error });
 	}

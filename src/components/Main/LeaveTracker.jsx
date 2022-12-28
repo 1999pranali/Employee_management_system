@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function LeaveTracker() {
     const navigate = useNavigate();
@@ -30,6 +32,12 @@ function LeaveTracker() {
     
       axios.post(`http://localhost:8080/api/leave/update/${data._id}`,data)
       .then((res)=>{
+        toast.info("Employee Leave Status Successfully!", {
+          position: "top-right",
+          autoClose: 5000,          
+          pauseOnHover: true,          
+          theme: "colored",
+          });
         window.location.reload(true)
       console.log(res.message);
       })

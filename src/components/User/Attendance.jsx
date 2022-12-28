@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ls from "localstorage-slim";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Attendance() {
   const userId = ls.get("empId");
@@ -58,7 +60,13 @@ export default function Attendance() {
     axios
       .post("http://localhost:8080/api/attendance/checkIn", { userId: userId })
       .then((res) => {
-        alert("checkIn successfully");
+        toast.info("CheckIn Successfully!", {
+          position: "top-right",
+          autoClose: 5000,          
+          pauseOnHover: true,          
+          theme: "colored",
+          });
+        //alert("checkIn successfully");
         window.location.reload(true);
         // console.log("checkin Successfully");
       });
@@ -70,7 +78,13 @@ export default function Attendance() {
     axios
       .post(`http://localhost:8080/api/attendance/checkOut/${userId}`)
       .then((res) => {
-        alert("checkOut successfully");
+        toast.info("CheckOut Successfully!", {
+          position: "top-right",
+          autoClose: 5000,          
+          pauseOnHover: true,          
+          theme: "colored",
+          });
+        //alert("checkOut successfully");
         window.location.reload(true);
 
         // console.log("checkout Successfully");

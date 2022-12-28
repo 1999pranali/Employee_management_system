@@ -15,7 +15,8 @@ import ProfileEmp from "./components/User/Profile";
 import Cookies from 'js-cookie';
 import { useEffect} from "react";
 import Dashboard from "./components/Main/Dashboard";
-
+import { ToastContainer} from 'react-toastify';
+ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 	// const user = localStorage.getItem("token");
@@ -30,6 +31,8 @@ function App() {
 		}
 	},[]);
 	return (
+		<>
+		<ToastContainer />
 		<Routes>
 			<Route path="/signup" exact element={<Signup />} />
 			<Route path="/login" exact element={<Login />} />
@@ -53,6 +56,7 @@ function App() {
 
 			<Route path="/" element={<Navigate replace to="/login" />} />	
 		</Routes>
+		</>
 	);
 }
 
