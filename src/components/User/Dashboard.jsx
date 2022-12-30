@@ -86,10 +86,10 @@ export default function Dashboard() {
 
 
       axios
-          .get(`http://localhost:8080/api/leave/read/${userId}`)
+          .get(`http://localhost:8080/api/leave/leavecount/${userId}`)
           .then((res) => {
             setLeave(res.data);
-            //  console.log("Attendance Data" +attendance.Date);
+           
           });
   }, [leaveRecord[0]?._id]);
   
@@ -112,6 +112,7 @@ export default function Dashboard() {
      <button onClick={notify}>Notify!</button>
         <ToastContainer />
             </div> */}
+           
     <div class="flex flex-row m-8">
       <div class="p-3  max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 ">
         <div class="pl-14 pr-14">

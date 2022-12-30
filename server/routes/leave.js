@@ -119,6 +119,9 @@ router.get("/leavecount/:id", async (req, res) => {
 	}
   });
 
+
+ 
+
 //   router.get("/counts/:id", async (req, res) => {
 // 	try {
 
@@ -151,6 +154,24 @@ router.get("/leavecount/:id", async (req, res) => {
 // 	}
 //   });
 
+//    add json with both message and data
+
+
+// router.get("/find/:userId", verifyTokenAndAuthorization, async (req,res)=>{
+	
+// 	try{
+// 		const cartData = await Cart.findOne({ userId: req.params.userId });
+		
+// 		if(cartData){
+// 			res.status(200).json({success:1,message:"",data:[cartData]});
+// 		}else{
+// 			res.status(200).json({success:0,message:"No Data Found!"})
+// 		}
+		
+// 	}catch(err){
+// 		res.status(500).json({status:0,message:err.message})
+// 	}
+// })
 module.exports = router;
 
 
